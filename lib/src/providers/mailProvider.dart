@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http; 
 
 class MailProvider{
-  String _url = 'http://192.168.0.10:3000/v1/mail/';
+  String _url = 'http://192.168.0.3:3000/v1/mail/';
 
   Future<bool> sendEmail(Map<String,dynamic> dataFromUserProfile, String nombreDoctor, String apellidoDoctor) async{
     print('ENtro');

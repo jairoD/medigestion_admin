@@ -50,7 +50,7 @@ class LoginPage extends StatelessWidget {
             width: double.infinity,
           ),  
           new Text(
-            'Hola Medico',
+            'Hi Doctor',
             style: new TextStyle(color: Colors.white, fontSize: 25.0),
           ),
            
