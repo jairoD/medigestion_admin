@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:medigestion_admin/src/blocs/provider.dart';
+import 'package:medigestion_admin/src/pages/PdfPreviewScreen.dart';
 import 'package:medigestion_admin/src/pages/doctorChatList_page.dart';
 import 'package:medigestion_admin/src/pages/formulaMedica_page.dart';
+import 'package:medigestion_admin/src/pages/historia_clinica_page.dart';
 import 'package:medigestion_admin/src/pages/home_page.dart';
 import 'package:medigestion_admin/src/pages/login_page.dart';
 import 'package:medigestion_admin/src/pages/profileUser_page.dart';
 import 'package:medigestion_admin/src/pages/registro_page.dart';
+import 'package:medigestion_admin/src/pages/reviewDoctor_page.dart';
 
 void main() async{
   runApp(MyApp());
@@ -27,7 +30,9 @@ class MyApp extends StatelessWidget {
         DoctorListPage.routeName: (BuildContext context) => new DoctorListPage(),
         ProfileUserPage.routeName: (BuildContext context) => new ProfileUserPage(),
         FormulaMedicaPage.routeName: (BuildContext context) => new FormulaMedicaPage(),
-
+        HistoriaClinicaPage.routeName: (BuildContext context) => new HistoriaClinicaPage(),
+        PdfPreviewScreen.routeName: (BuildContext context) => new PdfPreviewScreen(),
+        ReviewDoctor.routeName: (BuildContext context) => new ReviewDoctor(),
       },
       theme: ThemeData(
           primaryColor: Color.fromRGBO(52, 54, 101, 1.0),

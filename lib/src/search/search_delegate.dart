@@ -1,9 +1,22 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:medigestion_admin/src/pages/chat_page.dart';
 import 'package:medigestion_admin/src/pages/profileDoctor_page.dart';
+import 'package:medigestion_admin/src/utils/Modal.dart';
 
 class DataSearch extends SearchDelegate {
+   Modal modal = new Modal();
+  
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    assert(context != null);
+    final ThemeData theme = Theme.of(context);
+    assert(theme != null);
+    return theme;
+  }
+
+  
   String seleccion = '';
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -37,29 +50,40 @@ class DataSearch extends SearchDelegate {
       return new Container();
     }
     return new StreamBuilder(
-        stream: Firestore.instance.collection('doctors').where("name", isEqualTo: query).snapshots(),
+        stream: Firestore.instance.collection('users').where("name", isEqualTo: query).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
-            final listaDoctores = snapshot.data.documents;
+            final listaUsuarios = snapshot.data.documents;
             return new ListView(
-              children: listaDoctores.map((doctor) {
+              children: listaUsuarios.map((user) {
                 return new ListTile(
-                  leading: new FadeInImage(
-                    placeholder: new AssetImage('assets/img/no-image.jpg'),
-                    image: new NetworkImage(doctor['photoUrl']),
+                  leading: user['photoUrl'] != null
+                  ? new CachedNetworkImage(
+                    placeholder: (context, url) => new Container(
+                    //padding: EdgeInsets.all(15.0),
                     width: 50.0,
-                    fit: BoxFit.contain,
+                    height: 50.0,
+                    child: new CircularProgressIndicator(
+                      strokeWidth: 1.0,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
                   ),
-                  title: new Text(doctor['name']),
-                  subtitle: new Text(doctor['about']),
+                  imageUrl: user['photoUrl'],
+                  width: 50.0,
+                  fit: BoxFit.cover,
+                )
+              : new Icon(
+                  Icons.account_circle,
+                  size: 50.0,
+                  color: Colors.blueGrey,
+             ),
+                  title: new Text(user['name']),
+                  subtitle: new Text(user['lastName']),
                   onTap: () {
                     close(context, null);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => new ProfilePage(
-                                  doctorDocument: doctor,
-                                )));
+                    modal.mainBottomSheet(context,user['uid']);
+                    
                   },
                 );
               }).toList(),
@@ -78,29 +102,40 @@ class DataSearch extends SearchDelegate {
       return new Container();
     }
     return new StreamBuilder(
-        stream: Firestore.instance.collection('doctors').where("name", isEqualTo: query).snapshots(),
+        stream: Firestore.instance.collection('users').where("name", isEqualTo: query).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
-            final listaDoctores = snapshot.data.documents;
+            final listaUsuarios = snapshot.data.documents;
             return new ListView(
-              children: listaDoctores.map((doctor) {
+              children: listaUsuarios.map((user) {
                 return new ListTile(
-                  leading: new FadeInImage(
-                    placeholder: new AssetImage('assets/img/no-image.jpg'),
-                    image: new NetworkImage(doctor['photoUrl']),
+                  leading:user['photoUrl'] != null
+                  ? new CachedNetworkImage(
+                    placeholder: (context, url) => new Container(
+                    //padding: EdgeInsets.all(15.0),
                     width: 50.0,
-                    fit: BoxFit.contain,
+                    height: 50.0,
+                    child: new CircularProgressIndicator(
+                      strokeWidth: 1.0,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor),
+                    ),
                   ),
-                  title: new Text(doctor['name']),
-                  subtitle: new Text(doctor['about']),
+                  imageUrl: user['photoUrl'],
+                  width: 50.0,
+                  height: 50.0,
+                  fit: BoxFit.cover,
+                )
+              : new Icon(
+                  Icons.account_circle,
+                  size: 50.0,
+                  color: Colors.blueGrey,
+             ),
+                  title: new Text(user['name']),
+                  subtitle: new Text(user['lastName']),
                   onTap: () {
                     close(context, null);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => new ProfilePage(
-                                  doctorDocument: doctor,
-                                )));
+                    modal.mainBottomSheet(context,user['uid']);
                   },
                 );
               }).toList(),

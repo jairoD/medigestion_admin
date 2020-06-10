@@ -118,7 +118,7 @@ Widget _crearEmail() {
     return new Padding(
       padding: EdgeInsets.only(left: 16, right: 16, top: 16),
       child: new TextFormField(
-        initialValue: userModel.name+''+userModel.lastName,
+        initialValue: userModel.name+' '+userModel.lastName,
         decoration: new InputDecoration(
           labelText: 'Nombre Completo',
           hintText: 'Ingresa nombre completo',

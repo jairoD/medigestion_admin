@@ -91,9 +91,6 @@ class _DoctorListPageState extends State<DoctorListPage> {
       appBar: new AppBar(
         title: new Text('Pacientes'),
         centerTitle: true,
-        actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.search), onPressed: () {}),
-        ],
       ),
       body: doctorList,
     );
